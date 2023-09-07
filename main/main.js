@@ -331,9 +331,9 @@ function mostrarUsuario(){
     console.log(usuario)
     let     html= `<div>
     <hr>
-    <h2>Usuario : ${usuario.nombre} ${usuario.apellido} fff</h2>
+    <h2>Usuario : ${usuario.nombre} ${usuario.apellido} </h2>
   </div>`;
-
+contenedorUsuario.innerHTML=html;
 }
 
 function cerrarSecion(){
