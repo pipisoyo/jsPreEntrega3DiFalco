@@ -19,7 +19,7 @@ class Usuario {
         this.contrasenia = contrasenia;
     }
 }
-//guarda el array usuario en Local Storage
+//guarda el array usuario en Local Storage.
 function guardarUsuarioLS(arr) {
     return localStorage.setItem("usuarios", JSON.stringify
         (arr))
