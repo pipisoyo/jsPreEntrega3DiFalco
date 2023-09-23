@@ -1,347 +1,275 @@
-
-
-let codigo;
-
-let rubro;
-let codigoInterno;
-let nombreProducto;
-let precio;
-let stock;
-let prod;
-let imagen;
-let total = 0;
-
-
+let codigo, rubro, codigoInterno, nombreProducto, precio, stock, prod, imagen;
 const rubros = ["Todos", "Caramelos", "Chocolates", "Electronica", "Gallettas", "Lacteos", "Merceria", "Regaleria", "Snacks"];
-
-class Producto {
-    constructor(codigo, rubro, codigoInterno, nombreProducto, stock, precio, imagen) {
-        this.codigo = codigo;
-        this.rubro = rubro;
-        this.codigoInterno = codigoInterno;
-        this.nombreProducto = nombreProducto;
-        this.precio = precio;
-        this.stock = stock;
-        this.imagen = imagen;
-    }
-}
-
-const productos = [];
-
-productos.push(new Producto(1, 2, 1, "Sugus", 10, 10, "sugus.jpeg"));
-productos.push(new Producto(2, 2, 2, "Palito de la selva", 10, 12,"palitos-de-la-selva.jpeg"));
-productos.push(new Producto(3, 2, 3, "Billiken", 10, 56,"billiken.jpeg"));
-productos.push(new Producto(4, 3, 1, "Block", 10, 78,"block.jpg"));
-productos.push(new Producto(5, 3, 2, "Milka", 10, 29,"milka.jpg"));
-productos.push(new Producto(6, 3, 3, "Toke", 10, 66,"toke.jpeg"));
-productos.push(new Producto(7, 4, 1, "Cargador", 10, 88,"cargador.jpg"));
-productos.push(new Producto(8, 4, 2, "Cable Usb", 10, 96,"cable-usb.jpeg"));
-productos.push(new Producto(9, 4, 3, "Memoria Micro SD 32gb", 10, 58,"memoria.jpg"));
-productos.push(new Producto(10, 5, 1, "Divercion", 10, 96, "divercion.jpg"));
-productos.push(new Producto(11, 5, 2, "Oreo", 10, 88,"oreo.jpg"));
-productos.push(new Producto(12, 5, 3, "Don Satur", 10, 13,"don-satur.jpg"));
-productos.push(new Producto(13, 6, 1, "Leche entera", 10, 15,"leche-entera.jpg"));
-productos.push(new Producto(14, 6, 2, "Leche descremada", 10, 79,"leche-descremada.jpg"));
-productos.push(new Producto(15, 6, 3, "Yogurt Ls Fut", 10, 85,"yogur-ls-frutilla.jpg"));
-productos.push(new Producto(16, 7, 1, "Agujas Canastita", 10, 63,"agujas-canastita.jpg"));
-productos.push(new Producto(17, 7, 2, "Elastico 2mts", 10, 49,"elastico.jpg"));
-productos.push(new Producto(18, 7, 3, "Hilo de coser", 10, 78,"hilo-coser.jpg"));
-productos.push(new Producto(19, 8, 1, "Caja de bombones", 10, 63,"caja-de-bombones.jpg"));
-productos.push(new Producto(20, 8, 2, "Perfume mujercitas", 10, 73,"perfume-mujercitas.jpg"));
-productos.push(new Producto(21, 8, 3, "Vino + Caja", 10, 15,"vino-caja.jpg"));
-productos.push(new Producto(22, 9, 1, "Doritos", 10, 91,"doritos.jpg"));
-productos.push(new Producto(23, 9, 2, "Lay's", 10, 85,"lays.jpg"));
-productos.push(new Producto(24, 9, 3, "Chettos", 10, 35,"cheetos.jpg"));
-
-const carrito=structuredClone(productos);
-//console.log("2 "+productos[0].stock)
-//let filtro, alerta, alerta2;
-for (i=0; i < carrito.length; i++){
-    carrito[i].stock=0;
-}
-
-/* function Largo(arr, alerta) {//Para comparar si la opcion igresada esta en el rago del tamaño de array()
-    let larg = arr.length
-    if ((alerta > larg) || (alerta < 1)) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function MostarRubros(rubros) {// Para concatenar los rubros e imprimirlos en pantalla
-    alerta = "Ingrese el rubro : ";
-    rubros.forEach(el => {
-        alerta = alerta + "\n" + (rubros.indexOf(el) + 1) + " - " + el;
-    }
-    );
-    alerta = alerta + "\nFinalizar - Ingrese cualquier caracter que no este en la lista"
-}
-function MostrarProductos(productos, filtro) {// Para concatenar los productos(segun seleccion de Rubro: TODOS o Un rubro especifico) e imprimirlos en pantalla
-    alerta2 = "Selecione los productos que quiere agregar al carrito : "
-    if (filtro == 1) {//Todos los rubros
-        for (let i = 0; i < productos.length; i++) {
-
-            alerta2 = alerta2 + "\n" + productos[i].codigo + " - " + productos[i].nombreProducto;
-        }
-    } else {
-        for (let i = 0; i < productos.length; i++) {
-            if (productos[i].rubro == filtro) {//Rubro especfico
-                alerta2 = alerta2 + "\n" + productos[i].codigoInterno + " - " + productos[i].nombreProducto;
-            }
-        }
-    }
-}
-
-function Carrito() {// para almacenar los productos seleccionados. Se almacena en el arra vacio "carrito"
-    MostarRubros(rubros)
-    filtro = prompt(alerta);
-    while (Largo(rubros, filtro)) {//mientras se verifique  que seleccion esta dentro del rango de rubros
-        MostrarProductos(productos, filtro);
-        let selec = true;// *1 selec asegura no guardar un "undefined" en carrito al ingresar una opcion invalida
-        selecion = prompt(alerta2);
-        if (filtro == 1) {
-            
-            if (Largo(productos, selecion)&&(Existencia(productos,selecion-1))) {
-                prod = selecion;
-                productos[selecion-1].stock = (productos[selecion-1].stock)-1;
-                console.log(productos[selecion-1].stock+" "+productos[selecion-1].nombreProducto)
-            } else if (!(Existencia(productos,selecion-1))){
-                alert("No hay stock del producto selecionado");
-                selec = false;//*1
-            }else{
-                alert("Opcion invalida ")
-                selec = false;//*1
-            }
-        } else {
-            
-            if ((selecion == 1) || (selecion == 2) || (selecion == 3)) {
-                for (let i = 0; i < productos.length; i++) {
-                    if (((productos[i].rubro == filtro) && (productos[i].codigoInterno == selecion))&&(Existencia(productos,selecion-1))) {
-                        prod = productos[i].codigo;
-                        productos[i].stock =(productos[i].stock)-1;
-                        console.log(productos[i].stock+" "+productos[i].nombreProducto)
-
-                    }
-                }
-            } else {
-                alert("Opcion invalida ")
-                selec = false;// *1
-            }
-        }
-        if (selec) {//*1
-            carrito.push(productos[prod - 1]);
-            console.log("seleccion : " + selecion);
-        }
-        filtro = prompt(alerta);
-    }
-}
-
-
-function MostrarCompra(arr) {
-    Carrito()
-    let listaCompra = "Su Carrito : \n";
-    arr.forEach(pro => {
-        total = (pro.precio) + total;
-        console.log(total)
-        listaCompra = listaCompra + pro.nombreProducto + "  $ " + pro.precio + "\n";
-        console.log(total)
-    });
-    if (total == 0) {
-        return listaCompra = "Su carrito esta vacio"
-    } else {
-        return listaCompra + "Total :  $ " + total;
-    }
-}
-
-function Existencia(productos,prod){
-    if ((productos[prod].stock) < 1 ){
-       
-    return false
-}else{
-    return true
-}
-}
-
-alert(MostrarCompra(carrito));
-
-productos.forEach(producto =>console.log(producto))
- */
-const contenedorLista=document.querySelector("#contenedorLista");
-const btnBuscar=document.querySelector("#btnBuscar");
-const produc=document.querySelector("#produc");
+//recupero del LS los productos
+const productos = JSON.parse(localStorage.getItem("productos"));
+const carrito = structuredClone(productos);
+let usuarioLog = JSON.parse(localStorage.getItem("usuario"))
+const contenedorLista = document.querySelector("#contenedorLista");
+const btnBuscar = document.querySelector("#btnBuscar");
+const produc = document.querySelector("#produc");
 const contenedor = document.querySelector("#contenedor");
 const fin = document.querySelector("#fin");
-const btnFin= document.querySelector("#btnFin");
-const contenedorUsuario =document.querySelector("#contenedorUser")
-const btnCerrar= document.querySelector("#btnCerrar");
-const contenedorUser= document.querySelector("#contenedorUser");
-function crearLista(arr) {
-    contenedorLista.innerHTML = "";   
-    let html;
-    for ( let i = 0 ; i < arr.length ; i++) {
-        html= `<option id="contenedorLista" value="${i+1}">${arr[i]}</option>`
-        contenedorLista.innerHTML += html;
-        console.log("contenedor : " +html   )
+const btnFin = document.querySelector("#btnFin");
+const btnVaciar = document.querySelector("#btnVaciar");
+const contenedorUsuario = document.querySelector("#contenedorUser")
+const btnCerrar = document.querySelector("#btnCerrar");
+const contenedorUserA = document.querySelector("#contenedorUser");
+const resumen = document.querySelector("#resumen")
+const TOTAL = document.querySelector("#TOTAL")
 
-    }
-    console.log(html)
+// inicializar el carrito en stock 0
+for (i = 0; i < carrito.length; i++) {//
+    carrito[i].stock = 0;
 }
 
-crearLista(rubros);
-
-
-
-function filtroRubro(valor){
-    contenedorLista.addEventListener("change", (e) => {
-       valor = document.querySelector("#contenedorLista").value;
-});
-
+//verificar existencia en el LocalStorage , si no lo crea.(cuando se loguea se crea un carrito en el LS por cafa usuario)
+function exitanciaCarritoLS() {
+    if (JSON.parse(localStorage.getItem(usuarioLog + "carrito") == null)) {
+        const carritoLS = structuredClone(carrito);
+        localStorage.setItem(usuarioLog + "carrito", JSON.stringify(carritoLS))
     }
-    function buscarFiltrado(productos,valor,seleccion){
-        console.log("valor al hacer click en buscar: " + valor)
-    if (valor == "1"){
-        for (let i=0; i< productos.length ;i++){
-            seleccion.push(productos[i]);
-        }
-        
-    }else{
-    
-    for (let i = 0 ; i < productos.length; i++){
-        if (productos[i].rubro == valor){
-            seleccion.push(productos[i]);
-        }
-    }
-    
-    }
-    }
+    const carritoLS = JSON.parse(localStorage.getItem(usuarioLog + "carrito"))
+    return carritoLS
+}
+exitanciaCarritoLS()
+mostrarCompra(JSON.parse(localStorage.getItem(usuarioLog + "carrito")))
 
-
-
-    
-    
-function filtrarServicio(arr, filtro) {
-    const filtrado = arr.filter((el) => {
-      return el.nombreProducto.toLowerCase().includes(filtro.toLowerCase());
-    });
-  return filtrado;
-  }
-
-
-  function crearHtml(arr,conten,fin) {
-    conten.innerHTML = "";
-    fin.innerHTML="";
+//crea la listra para filtral los productos segul el rubro
+function crearLista(arr) {
+    contenedorLista.innerHTML = "";
     let html;
-    for (const el of arr) {
-      html = `<div class="cuadro">
-                  <img src="../img/${el.imagen}" alt="${el.nombreProducto}">
-                  <hr>
-                  <h3>${el.nombreProducto}</h3>
-                  <p>Precio: $${el.precio} </p>
+    for (let i = 0; i < arr.length; i++) {
+        html = `<option id="contenedorLista" value="${i + 1}">${arr[i]}</option>`
+        contenedorLista.innerHTML += html;
+    }
+}
+
+//crea de manera dinamica los productos q se visualizan segun los filtros aplicados
+function crearHtml(contenedor, arr) {
+    contenedor.innerHTML = "";
+    let html;
+    let idd = 0;
+    for (let i = 0; i < arr.length; i++) {
+        const carritoLS = JSON.parse(localStorage.getItem(usuarioLog + "carrito"))
+        carritoLS.forEach((e) => {
+            e.codigo == arr[i].codigo && (idd = e.stock);
+        })
+        html = `<div class="cuadro" id="${arr[i].nombreProducto}">
+                  <img src="../img/${arr[i].imagen}" alt="${arr[i].nombreProducto}">
+                  <hr
+                  <h3 id="${arr[i].nombreProducto}" class="nombreProducto">${arr[i].nombreProducto}</h3>
+                  <p>Precio: $${arr[i].precio} </p>
                   <div id="contador" class="contador">
-                  <input id="${el.codigo}" class="cant" type="number" min="0" max="${el.stock}" pattern="^[0-9]" value="0"></input>
+                  <div id="${arr[i].codigo}" class="producto" type="number" min="0" max="${arr[i].stock}" pattern="^[0-9]" value="0"></div>
+                  <input type="number" id="mostrar" class="mostrar" value="${idd}" disabled></input>
+                  <button type=submit class="agregar" id="agregar">+</button>
+                  <button type=submit id="quitar" class="quitar">-</button>
                   </div>
                 </div>`;
-                conten.innerHTML += html;
+        contenedor.innerHTML += html
     }
-  }
-  function crearHtmlChango(arr,conten) {
-    conten.innerHTML = "";
-    let html;
-    let htmlfin;
-    let total=0;
-    for (const el of arr) {
-        let total_parcial=(el.precio)*(el.stock)
-         total=total+total_parcial;
-      html = `<div class="cuadro">
-                  <img src="../img/${el.imagen}" alt="${el.nombreProducto}">
-                  <hr>
-                  <h3>${el.nombreProducto}</h3>
-                  <p>Cantidad: ${el.stock} </p>
-                  <p>SubTotal: $${total_parcial}</p>
-                </div>`;
-                conten.innerHTML += html;
-    }
-    htmlfin= `<div class="finalizar">
-    <hr>
-    <h1>El total de su compra es</h1>
-    <h1>$${total}</h1>
-  </div>`;
-    conten.innerHTML=conten.innerHTML+htmlfin
-  }
-
-btnBuscar.addEventListener("click", (e) => {
-   let valor = document.querySelector("#contenedorLista").value;
-    filtroRubro(valor);
-    console.log("valor al hacer click : " + valor) 
-    let seleccion=[]
-    buscarFiltrado(productos,valor,seleccion)
-    const valorBuscado=document.getElementById("produc").value
-    console.log(valorBuscado)
-    const filtrado=filtrarServicio(seleccion, valorBuscado);
-    crearHtml(filtrado,contenedor,fin);
-    cargarChango()
-})
-
-function cargarChango(){
-const cambios = document.querySelectorAll(".cant")
-cambios.forEach(el =>{
-    el.addEventListener("change", function(e){
-        console.log([e.target.id])
-        console.log("el stock en producto es : "+productos[(e.target.id)-1].stock)
-        console.log("ha cambiado "+ e.target.id +" valor :" +e.target.value)
-        if (productos[(e.target.id)-1].stoc<1){
-           (e.target.value < 1)
-            alert("Valor no valido")
-        }else
-        carrito[(e.target.id)-1].stock=e.target.value   
-        console.log(carrito)
-        }
-        )
-})
+    agregarOquitar()
 }
 
-function mortarChango(){
-const chango=[]
-console.log(chango.length) 
-btnFin.addEventListener("click", (e) => {
-    for (let i = 0 ; i< carrito.length; i++){
-        if (carrito[i].stock!=0){
-        chango.push(carrito[i])
+crearHtml(contenedor, productos, carrito)
+crearLista(rubros);
+
+function filtroRubro(valor) {
+    contenedorLista.addEventListener("change", (e) => {
+        valor = document.querySelector("#contenedorLista").value;
+    });
+
+}
+//genera un array con los productos fitrados por rubros
+function buscarFiltrado(productos, valor, seleccion) {
+    if (valor == "1") {
+        for (let i = 0; i < productos.length; i++) {
+            seleccion.push(productos[i]);
+        }
+    } else {
+        for (let i = 0; i < productos.length; i++) {
+            (productos[i].rubro == valor) && seleccion.push(productos[i]);
         }
     }
-    if (chango.length==0){
-        contenedor.innerHTML =
-       `<div><hr>
-        <h1>Su Carrito esta vacio</h1>
-        </div>`
-    }else{
-    const cambios = document.querySelectorAll(".cant")
-    contenedor.innerHTML = "";
-    crearHtmlChango(chango,fin);
 }
-    console.log(chango)
-    
-    
-})
-}
-function mostrarUsuario(){
-  
-    const usuario = JSON.parse(localStorage.getItem("usuario"))
-    console.log(usuario)
-    let     html= `<div>
-    <hr>
-    <h2>Usuario : ${usuario.nombre} ${usuario.apellido} </h2>
-  </div>`;
-contenedorUsuario.innerHTML=html;
+//busca en el array filtrado los productos que asemejen a lo ingresado
+function filtrarServicio(arr, filtro) {
+    const filtrado = arr.filter((el) => {
+        return el.nombreProducto.toLowerCase().includes(filtro.toLowerCase());
+    });
+    return filtrado;
 }
 
-function cerrarSecion(){
-    btnCerrar.addEventListener("click",()=>{
-        location.href="../index.html";
+// detecta y guarda en variable el evento click correspondiente a +(agregar) o - (quitar)
+function agregarOquitar() {
+    const agregarBtn = document.querySelectorAll(".agregar")
+    const quitarBtn = document.querySelectorAll(".quitar")
+    agregarBtn.forEach(agregar => {
+        agregar.addEventListener("click", clickAgregar)
+    })
+    quitarBtn.forEach(quitar => {
+        quitar.addEventListener("click", clickQuitar)
     })
 }
+
+//recive evento, busca los id mas sercanos a este y regitra en variable los datos requeridos
+function clickAgregar(evento) {
+    const boton = evento.target;
+    const agregado = boton.closest(".cuadro");
+    const prodAgregado = agregado.querySelector(".producto").id
+    const nombreProd = agregado.querySelector(".nombreProducto").id;
+    const mostrarEn = agregado.querySelector(".mostrar")
+    const cont = 1;
+    controlStock(prodAgregado, cont, mostrarEn, nombreProd)
+
+}
+//recive evento, busca los id mas sercanos a este y regitra en variable los datos requeridos
+function clickQuitar(evento) {
+    const boton = evento.target;
+    const quitado = boton.closest(".cuadro");
+    const prodQuitado = quitado.querySelector(".producto").id;
+    const nombreProd = quitado.querySelector(".nombreProducto").id;
+    const mostrarEn = quitado.querySelector(".mostrar")
+    const cont = -1;
+    controlStock(prodQuitado, cont, mostrarEn, nombreProd)
+}
+//segun parametros, agrega o quita productos al stock del carrito
+function cargarCarrito(idd, conta) {
+    const carritoLS = exitanciaCarritoLS()
+    if (carritoLS[idd - 1].stock >= 1) {
+        carritoLS[idd - 1].stock = carritoLS[idd - 1].stock + conta;
+        return localStorage.setItem(usuarioLog + "carrito", JSON.stringify(carritoLS))
+    } else {
+        if (conta > 0) {
+            carritoLS[idd - 1].stock = carritoLS[idd - 1].stock + conta;
+            return localStorage.setItem(usuarioLog + "carrito", JSON.stringify(carritoLS))
+        }
+    }
+}
+// muestra en el DOM el valor de stock del producto que esta en el carrito
+function imprimir(mostrar, idd) {
+    const carritoLS = exitanciaCarritoLS()
+    mostrar.value = carritoLS[idd - 1].stock;
+}
+
+//muestra en tiempo real los productos que se agregan o quitan al carrito
+function mostrarCompra(arr) {
+    let total = 0;
+    let html = ''
+    let htmlTotal = ''
+    resumen.innerHTML = html
+    TOTAL.innerHTML = htmlTotal
+    for (const el of arr) {
+        if (el.stock > 0) {
+            let total_parcial = (el.precio) * (el.stock)
+            total = total + total_parcial;
+            html = `<div class="resumen">
+        <div class="h3res">
+        <div>
+        <h3 class="tituloProd">${el.nombreProducto} </h3>
+        <div>
+        <img class="img-resumen" src="../img/${el.imagen}" alt="${el.nombreProducto}">
+        <div class=h3res-info>
+        <h3>Cantidad: ${el.stock}</h3> 
+        <br>
+        <h3>SubTotal: $${total_parcial}</h3>
+        </div>
+        </div>
+      </div>`;
+            resumen.innerHTML += html;
+        }
+        htmlTotal = `<div class="total" id="total"div> Total : $ ${total}</div>`
+        TOTAL.innerHTML = htmlTotal
+    }
+}
+
+//buscar
+btnBuscar.addEventListener("click", (e) => {
+    let valor = document.querySelector("#contenedorLista").value;
+    filtroRubro(valor);
+    let seleccion = []
+    buscarFiltrado(productos, valor, seleccion)
+    const valorBuscado = document.getElementById("produc").value
+    const filtrado = filtrarServicio(seleccion, valorBuscado);
+    crearHtml(contenedor, filtrado);
+})
+//verifica q el stock del carrito no sea mayor al stok q existe
+function controlStock(idd, cont, mostrarEn, nombreProd) {
+    const carritoLS = exitanciaCarritoLS()
+    const stockReal = productos[idd - 1].stock
+    const stockCarrito = carritoLS[idd - 1].stock
+    if (stockCarrito < stockReal) {
+        cargarCarrito(idd, cont)
+        imprimir(mostrarEn, idd)
+        mostrarCompra(JSON.parse(localStorage.getItem(usuarioLog + "carrito")))
+        cont > 0 ? cartelito(nombreProd, "agragado al carrito") : (cont < 0 && stockCarrito != 0) ? cartelito(nombreProd, "quitado del carrito") : cartelito(nombreProd, "- ERROR - Verifique seleccion");
+    } else if (stockCarrito == stockReal && cont < 0) {
+        cargarCarrito(idd, cont)
+        imprimir(mostrarEn, idd)
+        mostrarCompra(JSON.parse(localStorage.getItem(usuarioLog + "carrito")))
+        cartelito(nombreProd, "quitado del carrito")
+    } else {
+        cartelito(nombreProd, "stock agotado")
+    }
+}
+//termina compra- vacia carrito
+btnFin.addEventListener("click", (e) => {
+    localStorage.removeItem(usuarioLog + "carrito")
+    const carritoLS = structuredClone(carrito);
+    localStorage.setItem("carrito", JSON.stringify(carritoLS))
+    resumen.innerHTML = `GRACIAS POR SU COMPRA`;
+    const mostrar = document.querySelector(".mostrar")
+    imprimir(mostrar, 1)
+    localStorage.setItem(usuarioLog + "carrito", JSON.stringify(carritoLS))
+    crearHtml(contenedor, carritoLS)
+})
+
+btnVaciar.addEventListener("click", (e) => {
+    localStorage.removeItem(usuarioLog + "carrito")
+    const carritoLS = structuredClone(carrito);
+    localStorage.setItem("carrito", JSON.stringify(carritoLS))
+    resumen.innerHTML = `Carrito vacio`;
+    TOTAL.innerHTML = `<div class="total" id="total"div> Total : $ 0 </div>`
+    const mostrar = document.querySelector(".mostrar")
+    imprimir(mostrar, 1)
+    localStorage.setItem(usuarioLog + "carrito", JSON.stringify(carritoLS))
+    crearHtml(contenedor, carritoLS)
+
+})
+
+//muestra al usuario logeado
+function mostrarUsuario() {
+    const infoUsuarios = JSON.parse(localStorage.getItem("usuarios")).find((e) => e.usuario == usuarioLog);
+    const { nombre, apellido } = infoUsuarios
+    let html = `<div> 
+    <hr>
+    <h2>Usuario : ${nombre} ${apellido} </h2>
+  </div>`;
+    contenedorUsuario.innerHTML = html;
+}
 mostrarUsuario()
-mortarChango()
+
+function cerrarSecion() {
+    btnCerrar.addEventListener("click", () => {
+        location.href = "../index.html";
+    })
+}
+
+
+function cartelito(nombre, mensaje) {
+    Toastify({
+        text: nombre + " " + mensaje,
+        duration: 1000,
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to left,#28bce5,#aae9fa )",
+            color: "black"
+        },
+    }).showToast();
+}
 
 cerrarSecion()
